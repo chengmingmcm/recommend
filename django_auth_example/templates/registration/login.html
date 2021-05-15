@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>登陆</title>
+	<link rel="stylesheet" href="/static/assets/libs/particles/css/style.css">
+	<link rel="stylesheet" href="/static/assets/css/base.css">
+	<link rel="stylesheet" href="/static/assets/css/login.css" />
+</head>
+<body>
+	<!-- particles.js container -->
+	<div id="particles-js"></div>
+	<div id="wrapper">
+		<div>
+			<img src="/static/assets/img/zhihu_logo.png" />
+			<h2>来看看有关于你自己的电影推荐吧！</h2>
+		</div>
+		<nav class="switch_nav">
+			<a href="{% url 'users:register' %}" id="switch_signup" class="switch_btn">注册</a>
+			<a href="javascript:;" id="switch_login" class="switch_btn on">登陆</a>
+			<div class="switch_bottom" id="switch_bottom"></div>
+		</nav>
+		<div id="login">
+			<form method="post" action="{% url 'login' %}">
+			{% csrf_token %}
+                {{ form.non_field_errors }}
+				{% for field in form %}
+                    
+				<ul class="group_input">
+					<li>
+					{{ field.label_tag }}
+					<p>
+					{{ field }}
+					</li>
+				</ul>
+				<div id="footer">
+		
+			
+			<span>{{ field.errors }}</span>
+            {% if field.help_text %}</span>
+				<p class="help text-small text-muted">{{ field.help_text|safe }}</p>
+            {% endif %}
+			</span><p>
+		</div>
+				
+				
+				
+                    {% endfor %}
+				<button type="submit" class="submit_btn" id="btnSubmit">登陆</button>
+			</form>
+			
+	<script src="/static/assets/libs/jquery-1.12.4/jquery.min.js"></script>
+	<script src="/static/assets/libs/particles/particles.min.js"></script>
+	<script src="/static/assets/libs/particles/js/app.js"></script>
+	<!-- <script src="../assets/libs/particles/js/lib/stats.js"></script> -->
+	<script>
+		var count_particles, stats, update;
+		stats = new Stats;
+		stats.setMode(0);
+		stats.domElement.style.position = 'absolute';
+		stats.domElement.style.left = '0px';
+		stats.domElement.style.top = '0px';
+		document.body.appendChild(stats.domElement);
+		count_particles = document.querySelector('.js-count-particles');
+		update = function() {
+			stats.begin();
+			stats.end();
+			if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) {
+				count_particles.innerText = window.pJSDom[0].pJS.particles.array.length;
+			}
+			requestAnimationFrame(update);
+		};
+		requestAnimationFrame(update);
+	</script>
+	
+</body>
+</html>
